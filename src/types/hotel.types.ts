@@ -22,10 +22,10 @@ export interface SearchParams {
   group_size: number;
 }
 
-export interface SearchResponse {
+export type SearchResponse = {
   hotels: Hotel[];
   total: number;
-}
+};
 
 export type SSEEventType = "hotel" | "complete" | "error";
 

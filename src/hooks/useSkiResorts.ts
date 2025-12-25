@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { getSkiResorts } from "../api/api";
 import { Resort } from "../types/hotel.types";
+import { ERROR_MESSAGES } from "../constants/errorMessages.constants";
 
 let resortsCache: Resort[] | null = null;
 let resortsPromise: Promise<Resort[]> | null = null;
@@ -33,7 +34,11 @@ export const useSkiResorts = () => {
         setLoading(false);
       })
       .catch((err) => {
-        setError(err instanceof Error ? err.message : "Failed to load resorts");
+        setError(
+          err instanceof Error
+            ? err.message
+            : ERROR_MESSAGES.LOAD_RESORTS_FAILED
+        );
         console.error("Error loading resorts:", err);
         hasFetched.current = false;
         resortsPromise = null;

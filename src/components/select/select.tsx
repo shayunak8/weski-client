@@ -3,17 +3,17 @@ import * as SelectRaddix from '@radix-ui/react-select';
 
 import "./select.scss";
 
-interface Props {
+interface SelectProps {
     onChange: (value: string) => void;
     value: string;
     options: {label: string; value: string}[];
 }
 
-const Select: FC<Props> = ({onChange, value, options}) => {
+const Select: FC<SelectProps> = ({onChange, value, options}) => {
     return (
         <SelectRaddix.Root onValueChange={value => onChange(value)} value={value}>
             <SelectRaddix.Trigger className="select-trigger">
-                <SelectRaddix.Value placeholder="SelectRaddix a resort" />
+                <SelectRaddix.Value placeholder="Select a resort" />
             </SelectRaddix.Trigger>
 
             <SelectRaddix.Portal>

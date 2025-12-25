@@ -1,6 +1,6 @@
-import { FC, SyntheticEvent } from 'react';
+import { FC, SyntheticEvent, useMemo } from 'react';
 import { Hotel } from '../../../types/hotel.types';
-import './hotel-card.scss';
+import './hotelCard.scss';
 
 interface HotelCardProps {
   hotel: Hotel;
@@ -11,6 +11,8 @@ const HotelCard: FC<HotelCardProps> = ({ hotel }) => {
     const target = e.target as HTMLImageElement;
     target.style.display = 'none';
   };
+
+  const stars = useMemo(() => Array.from({ length: hotel.stars }, (_, i) => i), [hotel.stars]);
 
   return (
     <div className="hotel-card">
@@ -26,9 +28,9 @@ const HotelCard: FC<HotelCardProps> = ({ hotel }) => {
       <div className="hotel-info">
         <h3 className="hotel-name">{hotel.name}</h3>
         <div className="hotel-details">
-          <div className="hotel-rating">
-            {Array.from({ length: hotel.stars }).map((_, i) => (
-              <span key={i} className="star">★</span>
+          <div className="hotel-rating" aria-label={`${hotel.stars} star${hotel.stars !== 1 ? 's' : ''} rating`}>
+            {stars.map((index) => (
+              <span key={index} className="star">★</span>
             ))}
           </div>
           <div className="hotel-location">{hotel.location}</div>

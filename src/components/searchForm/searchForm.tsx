@@ -1,13 +1,14 @@
 import { FC, useState } from "react";
-import "./search-form.scss";
-import ResortsSelect from "./resorts-select/resorts-select";
-import GuestsSelect from "./guests-select/guests-select";
-import SearchButton from "./search-button/search-button";
+import "./searchForm.scss";
+import ResortsSelect from "./resortsSelect/resortsSelect";
+import GuestsSelect from "./guestsSelect/guestsSelect";
+import SearchButton from "./searchButton/searchButton";
 import DatePicker from 'react-datepicker';
 import dayjs from 'dayjs';
 import { SearchParams } from '../../types/hotel.types';
 import { formatDate } from '../../utils/date.utils';
 import { validateSearchForm, ValidationErrors } from '../../utils/validation.utils';
+import { DEFAULT_DAYS_OFFSET } from '../../constants/app.constants';
 
 interface SearchFormProps {
     onSearch: (params: SearchParams) => void;
@@ -17,7 +18,7 @@ const SearchForm: FC<SearchFormProps> = ({ onSearch }) => {
     const [skiSiteId, setSkiSiteId] = useState<number>(1);
     const [groupSize, setGroupSize] = useState<number>(1);
     const [startDate, setStartDate] = useState<Date | null>(dayjs().toDate());
-    const [endDate, setEndDate] = useState<Date | null>(dayjs().add(7, 'days').toDate());
+    const [endDate, setEndDate] = useState<Date | null>(dayjs().add(DEFAULT_DAYS_OFFSET, 'days').toDate());
     const [errors, setErrors] = useState<ValidationErrors>({});
 
     const handleSearch = () => {
@@ -64,7 +65,6 @@ const SearchForm: FC<SearchFormProps> = ({ onSearch }) => {
                     enableTabLoop={false}
                     dateFormat="dd/MM/yyyy"
                     placeholderText="Start date"
-                    
                 />
                 {errors.startDate && <span className="error-text">{errors.startDate}</span>}
             </div>
@@ -90,3 +90,4 @@ const SearchForm: FC<SearchFormProps> = ({ onSearch }) => {
 }
 
 export default SearchForm;
+

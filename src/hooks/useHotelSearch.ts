@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { SearchParams, Hotel } from "../types/hotel.types";
 import { searchHotelsStream } from "../api/api";
+import { ERROR_MESSAGES } from "../constants/errorMessages.constants";
 
 export const useHotelSearch = () => {
   const [hotels, setHotels] = useState<Hotel[]>([]);
@@ -34,7 +35,7 @@ export const useHotelSearch = () => {
       );
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : "An unknown error occurred";
+        err instanceof Error ? err.message : ERROR_MESSAGES.UNKNOWN_ERROR;
       setError(errorMessage);
       setLoading(false);
     }
