@@ -1,10 +1,10 @@
 import { FC, Suspense, lazy } from "react";
-import "./nav-bar.scss";
-import WeSkiLogo from "../weski-logo/weski-logo";
+import "./navBar.scss";
+import WeSkiLogo from "../weskiLogo/weskiLogo";
 import { useHotelSearch } from "../../hooks/useHotelSearch";
 
-const SearchForm = lazy(() => import("../search-form/search-form"));
-const HotelResults = lazy(() => import("../hotel-results/hotel-results"));
+const SearchForm = lazy(() => import("../searchForm/searchForm"));
+const HotelResults = lazy(() => import("../hotelResults/hotelResults"));
 
 const NavBar: FC = () => {
     const { hotels, loading, error, searchHotels } = useHotelSearch();
@@ -25,3 +25,4 @@ const NavBar: FC = () => {
 }
 
 export default NavBar;
+

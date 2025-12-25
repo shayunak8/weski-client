@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Hotel } from '../../types/hotel.types';
-import HotelCard from './hotel-card/hotel-card';
-import './hotel-results.scss';
+import HotelCard from './hotelCard/hotelCard';
+import './hotelResults.scss';
 
 interface HotelResultsProps {
   hotels: Hotel[];

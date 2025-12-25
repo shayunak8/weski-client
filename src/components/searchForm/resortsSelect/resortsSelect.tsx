@@ -2,12 +2,12 @@ import { FC, useEffect } from 'react';
 import Select from '../../select/select';
 import { useSkiResorts } from '../../../hooks/useSkiResorts';
 
-interface Props {
+interface ResortsSelectProps {
     onChange: (resortId: number) => void;
     value: number;
 }
 
-const ResortsSelect: FC<Props> = ({onChange, value}) => {
+const ResortsSelect: FC<ResortsSelectProps> = ({onChange, value}) => {
     const { resorts, loading, error } = useSkiResorts();
 
     useEffect(() => {
@@ -34,3 +34,4 @@ const ResortsSelect: FC<Props> = ({onChange, value}) => {
 }
 
 export default ResortsSelect;
+

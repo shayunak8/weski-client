@@ -1,31 +1,14 @@
-import axios from "axios";
 import { Resort, SearchParams, Hotel, SSEMessage } from "../types/hotel.types";
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
-
-const apiClient = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-const handleError = (error: unknown): Error => {
-  if (axios.isAxiosError(error)) {
-    return new Error(
-      error.response?.data?.message || error.message || "API request failed"
-    );
-  }
-  return error instanceof Error ? error : new Error("Unknown error occurred");
-};
+import { apiInstance, handleApiError, getApiBaseUrl } from "./apiInstance";
+import { ERROR_MESSAGES } from "../constants/errorMessages.constants";
 
 export const getSkiResorts = async (): Promise<Resort[]> => {
   try {
-    const response = await apiClient.get<Resort[]>("/hotels/ski-resorts");
+    const response = await apiInstance.get<Resort[]>("/hotels/ski-resorts");
     return response.data;
   } catch (error) {
     console.error("Error fetching ski resorts:", error);
-    throw handleError(error);
+    throw handleApiError(error);
   }
 };
 
@@ -36,11 +19,15 @@ export const searchHotelsStream = async (
   onError: (error: string) => void
 ): Promise<void> => {
   try {
-    const fetchResponse = await fetch(`${API_BASE_URL}/hotels/search`, {
+    const url = `${getApiBaseUrl()}/hotels/search`;
+    const headers = apiInstance.defaults.headers.common;
+
+    const fetchResponse = await fetch(url, {
       method: "POST",
       headers: {
+        ...headers,
         "Content-Type": "application/json",
-      },
+      } as HeadersInit,
       body: JSON.stringify(params),
     });
 
@@ -53,7 +40,7 @@ export const searchHotelsStream = async (
     let buffer = "";
 
     if (!reader) {
-      throw new Error("Stream reader not available");
+      throw new Error(ERROR_MESSAGES.STREAM_READER_UNAVAILABLE);
     }
 
     while (true) {
@@ -79,7 +66,7 @@ export const searchHotelsStream = async (
             } else if (data.type === "complete" && Array.isArray(data.data)) {
               onComplete(data.data);
             } else if (data.type === "error") {
-              onError(data.message || "An error occurred during search");
+              onError(data.message || ERROR_MESSAGES.SEARCH_ERROR);
             }
           } catch (e) {
             console.error("Failed to parse SSE data:", e);
@@ -89,7 +76,7 @@ export const searchHotelsStream = async (
     }
   } catch (error) {
     const errorMessage =
-      error instanceof Error ? error.message : "Unknown error occurred";
+      error instanceof Error ? error.message : ERROR_MESSAGES.UNKNOWN_ERROR;
     onError(errorMessage);
   }
 };
@@ -98,13 +85,13 @@ export const searchHotelsSync = async (
   params: SearchParams
 ): Promise<{ hotels: Hotel[]; total: number }> => {
   try {
-    const response = await apiClient.post<{
+    const response = await apiInstance.post<{
       hotels: Hotel[];
       total: number;
     }>("/hotels/search/sync", params);
     return response.data;
   } catch (error) {
     console.error("Error searching hotels:", error);
-    throw handleError(error);
+    throw handleApiError(error);
   }
 };
