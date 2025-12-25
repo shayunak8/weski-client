@@ -2,6 +2,61 @@
 
 A hotel search web application built with React, TypeScript, and Vite. The app allows users to search for hotels in ski resorts with real-time streaming results.
 
+## Quick Start
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+- Backend API server running on `http://localhost:3000`
+
+### Installation & Running
+
+1. **Clone the repository**
+
+   ```bash
+   git clone <repository-url>
+   cd weski-hotels-app
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configure API URL (Optional)**
+
+   Create a `.env` file in the root directory:
+
+   ```env
+   VITE_API_URL=http://localhost:3000
+   ```
+
+   If not set, the app defaults to `http://localhost:3000`
+
+4. **Start the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+
+   Navigate to `http://localhost:5173` (or the port shown in the terminal)
+
+### Building for Production
+
+```bash
+# Build the application
+npm run build
+
+# Preview the production build
+npm run preview
+```
+
+The built files will be in the `dist` directory.
+
 ## Features
 
 - **Search Form**: Search hotels by destination (ski resort), group size (1-10), and trip dates
@@ -9,53 +64,6 @@ A hotel search web application built with React, TypeScript, and Vite. The app a
 - **Streaming API**: Uses Server-Sent Events (SSE) to show results as soon as they're available
 - **Form Validation**: All fields are mandatory with proper validation
 - **Responsive Design**: Optimized for desktop (1920x1080 resolution)
-
-## Prerequisites
-
-- Node.js (v18 or higher)
-- npm or yarn
-- Backend API server running on `http://localhost:3001` (or configure via environment variable)
-
-## Installation
-
-1. Clone the repository
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. (Optional) Create a `.env` file in the root directory:
-
-```env
-VITE_API_URL=http://localhost:3001
-```
-
-If not set, the app defaults to `http://localhost:3001`
-
-## Running the Application
-
-### Development Mode
-
-```bash
-npm run dev
-```
-
-The app will be available at `http://localhost:5173` (or the port shown in the terminal)
-
-### Production Build
-
-```bash
-npm run build
-```
-
-The built files will be in the `dist` directory.
-
-### Preview Production Build
-
-```bash
-npm run preview
-```
 
 ## Project Structure
 
