@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import Select from '../../select/select';
 import './guests-select.scss';
 
@@ -5,9 +6,8 @@ interface Props {
     onChange: (resortId: number) => void;
     value: number;
 }
-  
 
-const GuestsSelect: React.FC<Props> = ({onChange, value}) => {
+const GuestsSelect: FC<Props> = ({onChange, value}) => {
     return (
       <Select
         onChange={groupSize => onChange(Number(groupSize))} 
