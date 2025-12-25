@@ -1,6 +1,16 @@
 import axios from "axios";
 import { Resort, SearchParams, Hotel, SSEMessage } from "../types/hotel.types";
 
+/**
+ * API Service Layer
+ * 
+ * This module provides a clean abstraction for API calls.
+ * The architecture supports multiple providers through the backend:
+ * - Frontend communicates with a single backend endpoint
+ * - Backend aggregates results from multiple hotel suppliers
+ * - To add new providers, update the backend - no frontend changes needed
+ */
+
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 const apiClient = axios.create({

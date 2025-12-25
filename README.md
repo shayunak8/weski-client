@@ -14,7 +14,7 @@ A hotel search web application built with React, TypeScript, and Vite. The app a
 
 - Node.js (v18 or higher)
 - npm or yarn
-- Backend API server running on `http://localhost:3000` (or configure via environment variable)
+- Backend API server running on `http://localhost:3001` (or configure via environment variable)
 
 ## Installation
 
@@ -28,10 +28,10 @@ npm install
 3. (Optional) Create a `.env` file in the root directory:
 
 ```env
-VITE_API_URL=http://localhost:3000
+VITE_API_URL=http://localhost:3001
 ```
 
-If not set, the app defaults to `http://localhost:3000`
+If not set, the app defaults to `http://localhost:3001`
 
 ## Running the Application
 
@@ -66,8 +66,8 @@ src/
 │   ├── navbar/         # Navigation bar with search form
 │   ├── search-form/    # Search form with validation
 │   └── ...
-├── services/           # API service layer
-│   └── api.service.ts  # Axios-based API client
+├── api/                # API service layer
+│   └── api.ts          # Functional API client (supports multiple providers via backend)
 ├── types/              # TypeScript type definitions
 │   └── hotel.types.ts  # Hotel, Resort, SearchParams types
 └── App.tsx             # Main application component
@@ -108,9 +108,21 @@ The app integrates with a backend API that provides:
 - Error handling and loading states
 - Form validation
 
+## Architecture
+
+The application is designed with a clean architecture that supports easy integration of additional API providers:
+
+- **Frontend**: React app communicates with a single backend API endpoint
+- **Backend**: Aggregates results from multiple hotel suppliers (handles multiple requests for larger rooms)
+- **Extensibility**: To add new providers, update the backend - no frontend changes needed
+- **Streaming**: Results are streamed in real-time as they arrive from different suppliers
+- **Separation of Concerns**: API layer is abstracted, making it easy to swap or extend providers
+
 ## Notes
 
 - The app uses streaming SSE to display results as they arrive from different suppliers
 - Results are automatically sorted by price (ascending)
 - The app handles duplicate hotels and displays them only once
 - All form fields are mandatory and validated before submission
+- The backend handles multiple API requests (for larger rooms) and aggregates results
+- The page starts blank - results only appear after a search is submitted
